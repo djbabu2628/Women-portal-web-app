@@ -1,13 +1,13 @@
-
 /* ===========================================================
-   WOMEN SELF HELP GROUP PORTAL - FOCUS MODE JS
+   WOMEN SELF HELP GROUP PORTAL - FINAL STABLE JS
    =========================================================== */
 
+// Helper functions
 const $ = (id) => document.getElementById(id);
 const show = (el) => el?.classList.remove("hidden");
 const hide = (el) => el?.classList.add("hidden");
 
-// Toast utility
+// Toast message
 function showToast(msg) {
   const t = $("toast");
   if (!t) return;
@@ -16,22 +16,71 @@ function showToast(msg) {
   setTimeout(() => hide(t), 2500);
 }
 
-// Load user data
+// Modal
+function showModal(msg) {
+  const modal = $("modal");
+  if (!modal) return;
+  $("modal-body").innerHTML = msg;
+  show(modal);
+}
+if ($("modal-close")) $("modal-close").onclick = () => hide($("modal"));
+
+// LocalStorage data
 let users = JSON.parse(localStorage.getItem("wshg_users")) || [];
 let currentUser = JSON.parse(localStorage.getItem("wshg_current")) || null;
 
 /* --------------------------
-   LOGIN & LOGOUT SYSTEM
+   REGISTER FUNCTIONALITY
+--------------------------- */
+if ($("form-register")) {
+  $("form-register").addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const data = {
+      name: $("reg-name").value.trim(),
+      mobile: $("reg-mobile").value.trim(),
+      email: $("reg-email").value.trim(),
+      username: $("reg-username").value.trim(),
+      password: $("reg-password").value.trim(),
+      balance: 0,
+      totalSavings: 0,
+      lastPayment: "—",
+      transactions: [],
+    };
+
+    if (!data.username || !data.password || !data.name) {
+      showToast("⚠️ Please fill all required fields!");
+      return;
+    }
+
+    if (users.find((u) => u.username === data.username)) {
+      showToast("Username already exists!");
+      return;
+    }
+
+    users.push(data);
+    localStorage.setItem("wshg_users", JSON.stringify(users));
+
+    showModal("🎉 Registration Successful! Redirecting to Login...");
+    setTimeout(() => (window.location.href = "login.html"), 1500);
+  });
+}
+
+/* --------------------------
+   LOGIN FUNCTIONALITY
 --------------------------- */
 if ($("form-login")) {
   $("form-login").addEventListener("submit", (e) => {
     e.preventDefault();
     const uname = $("login-username").value.trim();
     const pass = $("login-password").value.trim();
-    const user = users.find(
-      (u) => u.username === uname && u.password === pass
-    );
-    if (!user) return showToast("Invalid username or password!");
+
+    const user = users.find((u) => u.username === uname && u.password === pass);
+    if (!user) {
+      showToast("Invalid username or password!");
+      return;
+    }
+
     currentUser = user;
     localStorage.setItem("wshg_current", JSON.stringify(user));
     showToast("✅ Login Successful!");
@@ -39,6 +88,9 @@ if ($("form-login")) {
   });
 }
 
+/* --------------------------
+   LOGOUT FUNCTIONALITY
+--------------------------- */
 if ($("btn-logout")) {
   $("btn-logout").onclick = () => {
     localStorage.removeItem("wshg_current");
@@ -69,19 +121,24 @@ if (window.location.pathname.includes("dashboard.html")) {
   $("prof-mobile").textContent = currentUser.mobile;
   $("prof-email").textContent = currentUser.email;
   $("prof-username").textContent = currentUser.username;
+
+  wireGroupFormHandlers();
+  initGroupModules();
 }
 
 /* --------------------------
-   RENDER FUNCTIONS
+   BALANCE + TRANSACTION RENDER
 --------------------------- */
 function renderBalance() {
+  if (!$("current-balance")) return;
   $("current-balance").textContent = "₹" + currentUser.balance;
   $("total-savings").textContent = "₹" + currentUser.totalSavings;
-  $("last-payment").textContent = currentUser.lastPayment || "—";
+  $("last-payment").textContent = currentUser.lastPayment;
 }
 
 function renderTransactions() {
   const tbody = document.querySelector("#txn-table tbody");
+  if (!tbody) return;
   tbody.innerHTML = "";
   (currentUser.transactions || []).forEach((txn) => {
     const tr = document.createElement("tr");
@@ -102,6 +159,7 @@ if ($("form-pay")) {
     e.preventDefault();
     const amt = parseFloat($("pay-amount").value);
     const mode = $("pay-mode").value;
+
     if (isNaN(amt) || amt <= 0) {
       showToast("Enter valid amount!");
       return;
@@ -135,7 +193,7 @@ if ($("form-pay")) {
 }
 
 /* --------------------------
-   PANEL TOGGLE SYSTEM
+   PANEL CONTROL SYSTEM
 --------------------------- */
 const panels = {
   balance: $("panel-balance"),
@@ -147,38 +205,32 @@ const panels = {
   meetings: $("panel-meetings"),
   internal: $("panel-internal-loans"),
   bank: $("panel-bank-loans"),
-  enterprises: $("panel-enterprises"),
 };
 
 const mainCards = $("main-cards");
 
-// Hide all cards & panels
 function hideAll() {
   hide(mainCards);
   Object.values(panels).forEach((p) => hide(p));
 }
 
-// Show specific card & panel only
 function showPanel(cardId, panelId) {
-  const allCards = document.querySelectorAll(".dash-card");
-  allCards.forEach((c) => (c.style.display = "none")); // hide all cards
-
-  const selectedCard = document.getElementById(cardId);
-  selectedCard.style.display = "flex"; // show only clicked card
-  selectedCard.style.margin = "0 auto"; // center it
   hideAll();
+  const allCards = document.querySelectorAll(".dash-card");
+  allCards.forEach((c) => (c.style.display = "none"));
+  const selectedCard = $(cardId);
+  selectedCard.style.display = "flex";
+  selectedCard.style.margin = "0 auto";
   show(panels[panelId]);
 }
 
-// Go back to full dashboard
 function goBack() {
   Object.values(panels).forEach((p) => hide(p));
   const allCards = document.querySelectorAll(".dash-card");
-  allCards.forEach((c) => (c.style.display = "flex")); // show all cards
+  allCards.forEach((c) => (c.style.display = "flex"));
   show(mainCards);
 }
 
-/* --- CARD TO PANEL MAP --- */
 const cardToPanelMap = {
   "card-balance": "balance",
   "card-pay": "pay",
@@ -189,7 +241,6 @@ const cardToPanelMap = {
   "card-meetings": "meetings",
   "card-internal-loans": "internal",
   "card-bank-loans": "bank",
-  "card-enterprises": "enterprises",
 };
 
 Object.entries(cardToPanelMap).forEach(([cardId, panelId]) => {
@@ -197,7 +248,6 @@ Object.entries(cardToPanelMap).forEach(([cardId, panelId]) => {
   if (card) card.onclick = () => showPanel(cardId, panelId);
 });
 
-/* --- BACK BUTTONS --- */
 ["balance-back", "pay-cancel", "trans-back", "help-back", "profile-back", "group-back"].forEach(
   (id) => {
     if ($(id)) $(id).onclick = goBack;
