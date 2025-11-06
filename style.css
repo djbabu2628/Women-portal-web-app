@@ -1,0 +1,278 @@
+/* ================================================
+   WOMEN SELF HELP GROUP PORTAL - PRO UI EDITION
+   ================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #f8dfff, #d0e6ff);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  color: #333;
+}
+
+/* ---------------- TOPBAR ---------------- */
+.topbar {
+  background: linear-gradient(90deg, #b26fff, #ff88c7);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.title {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.tagline {
+  font-size: 0.85rem;
+  opacity: 0.9;
+}
+
+.btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn.primary {
+  background: linear-gradient(90deg, #b26fff, #ff88c7);
+  color: white;
+  box-shadow: 0 4px 10px rgba(178, 111, 255, 0.3);
+}
+
+.btn.primary:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(255, 136, 199, 0.5);
+}
+
+.btn.danger {
+  background: #ff4d6d;
+  color: white;
+}
+
+.btn.ghost {
+  background: transparent;
+  border: 1px solid #ccc;
+  color: #444;
+}
+
+.container {
+  flex: 1;
+  padding: 20px;
+}
+
+.dashboard {
+  max-width: 1100px;
+  margin: auto;
+}
+
+/* ---------------- DASHBOARD CARDS ---------------- */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.dash-card {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.dash-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(255, 118, 188, 0.3);
+}
+
+.icon {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+
+/* ---------------- PANELS ---------------- */
+.panel {
+  background: rgba(255,255,255,0.95);
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  padding: 24px;
+  margin-top: 24px;
+  animation: fadeIn 0.4s ease forwards;
+}
+
+.panel.hidden {
+  display: none;
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 16px 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(10px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+/* ---------------- TABLE ---------------- */
+.txn-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.txn-table th, .txn-table td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+
+.txn-table th {
+  background: #f3e8ff;
+  color: #333;
+}
+
+/* ---------------- FORMS ---------------- */
+label {
+  display: block;
+  margin: 8px 0;
+  font-weight: 500;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-top: 4px;
+  outline: none;
+  transition: 0.3s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #b26fff;
+  box-shadow: 0 0 5px rgba(178, 111, 255, 0.4);
+}
+
+/* ---------------- TOAST ---------------- */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: linear-gradient(90deg, #b26fff, #ff88c7);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 30px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  opacity: 0.95;
+  z-index: 999;
+  font-weight: 500;
+}
+
+.toast.hidden {
+  display: none;
+}
+
+/* ---------------- MODAL ---------------- */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-card {
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  max-width: 350px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+  text-align: center;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-actions {
+  margin-top: 20px;
+}
+
+/* ---------------- RESPONSIVE ---------------- */
+@media (max-width: 600px) {
+  .title {
+    font-size: 1.2rem;
+  }
+  .dash-card {
+    padding: 14px;
+  }
+  .icon {
+    font-size: 1.6rem;
+  }
+}
+
+.btn.primary, .btn.danger {
+  margin: 4px;
+}
+
+.btn.primary {
+  background: linear-gradient(90deg, #c77dff, #ff91b0);
+  color: #fff;
+  border: none;
+}
+
+.btn.primary:hover {
+  transform: scale(1.05);
+  box-shadow: 0 3px 8px rgba(255, 145, 176, 0.4);
+}
+
+.tagline {
+  letter-spacing: 0.3px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Button group spacing */
+.btn + .btn,
+a + a,
+a + .btn {
+  margin-left: 14px;   /* space between adjacent buttons/links */
+}
+
+.auth-buttons {
+  display: flex;
+  gap: 16px;            /* equal gap between login & register */
+  justify-content: center;
+  margin-top: 12px;     /* thoda vertical breathing space */
+}
+
+.auth-buttons a,
+.auth-buttons button {
+  text-decoration: none;
+}

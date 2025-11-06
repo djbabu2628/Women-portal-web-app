@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>महिला बचत गट पोर्टल | Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <header class="topbar">
+        <div class="brand">
+            <h1 class="title">महिला बचत गट पोर्टल</h1>
+            <p class="tagline">Digital Empowerment for Every Woman 💰</p>
+        </div>
+        <button id="btn-logout" class="btn danger">Logout</button>
+    </header>
+
+    <main class="container">
+        <section class="dashboard">
+            <div class="dash-top">
+                <h2 id="welcome-user">Welcome</h2>
+                <p id="time-greet" class="muted"></p>
+            </div>
+
+            <!-- DASHBOARD CARDS -->
+            <div class="cards-grid" id="main-cards">
+                <div class="card dash-card" id="card-balance">
+                    <div class="icon">💰</div>
+                    <h4>Check Balance</h4>
+                </div>
+                <div class="card dash-card" id="card-pay">
+                    <div class="icon">💳</div>
+                    <h4>Pay Installment</h4>
+                </div>
+                <div class="card dash-card" id="card-trans">
+                    <div class="icon">🧾</div>
+                    <h4>Transaction History</h4>
+                </div>
+                <div class="card dash-card" id="card-help">
+                    <div class="icon">📞</div>
+                    <h4>Contact / Feedback</h4>
+                </div>
+                <div class="card dash-card" id="card-profile">
+                    <div class="icon">👩</div>
+                    <h4>My Profile</h4>
+                </div>
+                <div class="card dash-card" id="card-group">
+                    <div class="icon">👥</div>
+                    <h4>Group</h4>
+                </div>
+                <div class="card dash-card" id="card-meetings">
+                    <div class="icon">📅</div>
+                    <h4>Meetings</h4>
+                </div>
+                <div class="card dash-card" id="card-bank-loans">
+                    <div class="icon">🏦</div>
+                    <h4>Bank Loans</h4>
+                </div>
+            </div>
+
+            <!-- all cards like Check Balance, Pay Installment, etc. -->
+            
+
+
+            <!-- PANELS SECTION -->
+            <div class="panels">
+
+                <!-- BALANCE PANEL -->
+                <div class="panel hidden" id="panel-balance">
+                    <div class="card">
+                        <h3>Balance Details</h3>
+                        <p>💵 Current Balance: <strong id="current-balance">₹0</strong></p>
+                        <p>🗓 Last Payment: <strong id="last-payment">—</strong></p>
+                        <p>💰 Total Savings: <strong id="total-savings">₹0</strong></p>
+                        <button id="balance-back" class="btn ghost">Back</button>
+                    </div>
+                </div>
+
+                <!-- PAYMENT PANEL -->
+                <div class="panel hidden" id="panel-pay">
+                    <div class="card">
+                        <h3>Pay Installment</h3>
+                        <form id="form-pay" class="form-inline">
+                            <label>
+                                Amount
+                                <input type="number" id="pay-amount" min="1" required />
+                            </label>
+                            <label>
+                                Payment Mode
+                                <select id="pay-mode">
+                                    <option value="UPI">UPI</option>
+                                    <option value="Cash">Cash</option>
+                                    <option value="NetBanking">NetBanking</option>
+                                </select>
+                            </label>
+                            <div class="form-actions">
+                                <button type="submit" class="btn primary">Pay</button>
+                                <button id="pay-cancel" type="button" class="btn ghost">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- TRANSACTION PANEL -->
+                <div class="panel hidden" id="panel-trans">
+                    <div class="card">
+                        <h3>Transaction History</h3>
+                        <table id="txn-table" class="txn-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th>Mode</th>
+                                    <th>Balance</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        <div class="panel-actions">
+                            <button id="download-report" class="btn primary">Download Report</button>
+                            <button id="trans-back" class="btn ghost">Back</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- HELP PANEL -->
+                <div class="panel hidden" id="panel-help">
+                    <div class="card">
+                        <h3>Contact & Feedback</h3>
+                        <p><strong>Group Leader:</strong> Sunita Patil — 9876543210</p>
+                        <p><strong>Bank Officer:</strong> Rajesh Naik — 022-123456</p>
+                        <form id="form-feedback">
+                            <label>Your Feedback</label>
+                            <textarea id="fb-message" rows="3"></textarea>
+                            <div class="form-actions">
+                                <button type="submit" class="btn primary">Send</button>
+                                <button id="help-back" type="button" class="btn ghost">Back</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- PROFILE PANEL -->
+                <div class="panel hidden" id="panel-profile">
+                    <div class="card">
+                        <h3>My Profile</h3>
+                        <p><strong>Name:</strong> <span id="prof-name"></span></p>
+                        <p><strong>Mobile:</strong> <span id="prof-mobile"></span></p>
+                        <p><strong>Email:</strong> <span id="prof-email"></span></p>
+                        <p><strong>Username:</strong> <span id="prof-username"></span></p>
+                        <button id="profile-back" class="btn ghost">Back</button>
+                    </div>
+                </div>
+
+                <!-- GROUP PANEL -->
+                <!-- GROUP PANEL -->
+                <div class="panel hidden" id="panel-group">
+                    <div class="card">
+                        <h3>👥 Self Help Group Management</h3>
+
+                        <div id="group-create-block">
+                            <form id="form-create-group">
+                                <label>Group Name
+                                    <input type="text" id="input-group-name" required>
+                                </label>
+                                <label>Leader Username
+                                    <input type="text" id="input-group-leader" required>
+                                </label>
+                                <button type="submit" class="btn primary">Create Group</button>
+                            </form>
+                        </div>
+
+                        <div id="group-exists-block" class="hidden">
+                            <p><strong>Group Name:</strong> <span id="group-name-display"></span></p>
+                            <p><strong>Leader:</strong> <span id="group-leader-display"></span></p>
+                            <p><strong>Members (<span id="group-member-count">0</span>):</strong></p>
+                            <ul id="group-members-list"></ul>
+
+                            <hr>
+                            <form id="form-add-member">
+                                <label>Add Member (Username)
+                                    <input type="text" id="input-new-member" required>
+                                </label>
+                                <button type="submit" class="btn primary">Add Member</button>
+                            </form>
+                        </div>
+
+                        <button id="group-back" class="btn ghost" style="margin-top:10px;">Back</button>
+                    </div>
+                </div>
+
+
+                <!-- MEETINGS PANEL -->
+                <div class="panel hidden" id="panel-meetings">
+                    <div class="card">
+                        <h3>Meetings</h3>
+                        <ul id="meetings-list"></ul>
+                    </div>
+                </div>
+
+                <!-- INTERNAL LOANS PANEL -->
+                <div class="panel hidden" id="panel-internal-loans">
+                    <div class="card">
+                        <h3>Internal Loans</h3>
+                        <ul id="internal-loans-list"></ul>
+                    </div>
+                </div>
+
+                <!-- BANK LOANS PANEL -->
+                <div class="panel hidden" id="panel-bank-loans">
+                    <div class="card">
+                        <h3>Bank Loans</h3>
+                        <ul id="bank-loans-list"></ul>
+                    </div>
+                </div>
+
+                <!-- ENTERPRISES PANEL -->
+                <div class="panel hidden" id="panel-enterprises">
+                    <div class="card">
+                        <h3>Enterprises</h3>
+                        <ul id="enterprises-list"></ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="toast" class="toast hidden"></div>
+    <div id="modal" class="modal hidden">
+        <div class="modal-card">
+            <div id="modal-body"></div>
+            <div class="modal-actions">
+                <button id="modal-close" class="btn primary">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

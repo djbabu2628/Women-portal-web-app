@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login | महिला बचत गट पोर्टल</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1 class="title">महिला बचत गट पोर्टल</h1>
+  </header>
+
+  <main class="container">
+    <div class="card form-card">
+      <h3 class="section-title">Login / लॉगिन</h3>
+      <form id="form-login" class="form">
+        <label><span class="label-text">Username / युजरनेम</span>
+          <input type="text" id="login-username" required />
+        </label>
+        <label><span class="label-text">Password / पासवर्ड</span>
+          <input type="password" id="login-password" required />
+        </label>
+        <div class="form-actions">
+          <button type="submit" class="btn primary">Login</button>
+          <a href="register.html" class="btn outline">Register</a>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <div id="toast" class="toast hidden"></div>
+  <script src="script.js"></script>
+</body>
+</html>
